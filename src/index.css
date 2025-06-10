@@ -31,7 +31,7 @@ body {
 }
 
 h1 {
-   font-size: 3.2em;
+   font-size: 18px;
    line-height: 1.1;
 }
 
@@ -109,4 +109,24 @@ button:focus-visible {
 .container h2,
 p {
    margin: 10px 0;
+}
+
+.count-app {
+   width: 400px;
+   height: 600px;
+   background-color: #213547;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+.count-app h2 {
+   font-size: 3.4em;
+   text-align: center;
+}
+
+input {
+   width: 320px;
+   height: 60px;
+   padding: 0 15px;
 }
