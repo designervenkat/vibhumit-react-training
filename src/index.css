@@ -78,55 +78,23 @@ button:focus-visible {
    margin: 15px 0;
 }
 
-.product-container {
-   width: 720px;
-   display: grid;
-   place-content: center;
-   grid-template-columns: repeat(3, 1fr);
-}
-
-.product-card {
-   width: 320px;
-   height: 380px;
-   background-color: #1a1a1a;
-   margin: 15px;
-   display: flex;
-   flex-direction: column;
-   align-items: start;
-   justify-content: center;
-   border-radius: 30px;
-   overflow: none;
-   gap: 4px;
-}
-.product-card img {
-   width: 100%;
-   height: auto;
-   border-radius: 30px 30px 0 0;
-}
 .container {
-   padding: 15px;
-}
-.container h2,
-p {
-   margin: 10px 0;
-}
-
-.count-app {
-   width: 400px;
-   height: 600px;
-   background-color: #213547;
+   width: 720px;
+   height: 50vh;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
-}
-.count-app h2 {
-   font-size: 3.4em;
-   text-align: center;
+   grid-template-columns: repeat(1, 1fr);
+   background-color: #1a1a1a;
+   padding: 10px;
+   gap: 20px;
 }
 
 input {
-   width: 320px;
-   height: 60px;
+   width: 70%;
+   height: 40px;
    padding: 0 15px;
+   font-size: 18px;
+   font-weight: 500;
 }
