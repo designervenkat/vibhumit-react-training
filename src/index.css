@@ -91,10 +91,33 @@ button:focus-visible {
    gap: 20px;
 }
 
-input {
+input.password {
    width: 70%;
    height: 40px;
    padding: 0 15px;
    font-size: 18px;
    font-weight: 500;
+}
+
+.password-generator {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.password-generator button {
+   background-color: #535bf2;
+   color: #f9f9f9;
+   width: 210px;
+   height: 45px;
+   border-radius: 0;
+}
+.password-options {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+}
+.flex-center {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }

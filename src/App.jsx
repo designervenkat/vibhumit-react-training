@@ -1,97 +1,96 @@
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect, useRef, useCallback } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 function App() {
-   //    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-   //    const [name, setName] = useState('')
+   const [length, setLength] = useState(8)
+   const [character, setCharacter] = useState(false)
+   const [numbers, setNumbers] = useState(false)
+   const [password, setPassword] = useState('')
 
-   //    const [products, setProducts] = useState([])
+   const passwordEl = useRef(null)
 
-   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
+   const passwordGenerator = useCallback(() => {
+      let pass = ''
+      let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+      if (numbers) str += '0123456789'
+      if (character) str += '@#$%^&*'
 
-   // Use Cases
+      for (let index = 1; index <= length; index++) {
+         let char = Math.floor(Math.random() * str.length + 1)
+         pass += str.charAt(char)
+      }
+
+      setPassword(pass)
+   }, [length, character, numbers, setPassword])
+
+   const copyToClipboard = useCallback(() => {
+      passwordEl.current?.select()
+      passwordEl.current?.setSelectionRange(0, 15)
+      window.navigator.clipboard.writeText(password)
+
+      toast.success('Copied to Clipboard')
+   }, [password])
+
    useEffect(() => {
-      // Data Fetching
-      //   async function getAllProducts() {
-      //      try {
-      //         const response = await fetch(
-      //            'https://68351b82cd78db2058c04649.mockapi.io/products'
-      //         )
-      //         const data = await response.json()
-      //         setProducts(data)
-      //      } catch (error) {
-      //         console.log('Something went wrong', error)
-      //      }
-      //   }
-      //   getAllProducts()
-
-      localStorage.setItem('theme', theme)
-   }, [theme])
-
-   // componentDidMount
-   // useEffect(() => {
-   // perform any logic or function / side effect
-   // console.log('Component - Rendering')
-   // }) // without dependency array
-
-   // componentDidMount
-   //useEffect(() => {
-   // perform any logic or function / side effect
-   // console.log('I will run only once') // It run only one time
-   // }, []) // empty dependency array
-
-   // on first render + whenever dependancy change
-   //    componentDidUpdate
-   //    useEffect(() => {
-   // perform any logic or function / side effect
-   //   console.log(`Component update ${name}`)
-   // }, [name]) // when variable change in dependency array will re render again
-
-   // componentWillUnMount
-   //    useEffect(() => {
-   //       console.log(`Attached Listener`)
-   //       window.addEventListener('resize', updateWindowWidth)
-
-   //       // optional or when we need to clean up any logic or functions
-   //       //   return () => {
-   //       //      console.log(`De-Attached Listener`)
-   //       //      window.removeEventListener('resize', updateWindowWidth)
-   //       //   }
-   //    }, [])
-
-   //    const updateWindowWidth = () => {
-   //       setWindowWidth(window.innerWidth)
-   //    }
+      passwordGenerator()
+   }, [length, numbers, character])
 
    return (
       <div className='container'>
-         <h1>React useEffect Hook</h1>
-         {/* <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder='Type here...'
-         /> */}
+         <Toaster position='top-right' />
+         <h1>React useCallback and useRef</h1>
+         <h1>Password Generator</h1>
 
-         {/* {products.map((item) => (
-            <p key={item.id}> {item.title}</p>
-         ))} */}
+         <div className='password-generator'>
+            <input
+               className='password'
+               type='text'
+               readOnly
+               value={password}
+               ref={passwordEl}
+            />
+            <button onClick={copyToClipboard}>Copy</button>
+         </div>
 
-         <p>Current Theme : {theme}</p>
-         <button
-            className='button-element'
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-            Toggle Theme
-         </button>
+         <div className='password-options'>
+            <div className='flex-center'>
+               <input
+                  type='range'
+                  min={6}
+                  max={12}
+                  value={length}
+                  onChange={(e) => setLength(e.target.value)}
+               />
+               <label className=''>Length: {length}</label>
+            </div>
+            <div className='flex-center'>
+               <input
+                  type='checkbox'
+                  id='numberInput'
+                  value={numbers}
+                  onChange={() => setNumbers((prev) => !prev)}
+               />
+               <label
+                  htmlFor='numberInput'
+                  className='text-white text-sm'>
+                  Numbers
+               </label>
+            </div>
+            <div className='flex-center'>
+               <input
+                  type='checkbox'
+                  id='characterInput'
+                  value={character}
+                  onChange={() => setCharacter((prev) => !prev)}
+               />
+               <label
+                  htmlFor='characterInput'
+                  className='text-white text-sm'>
+                  Characters
+               </label>
+            </div>
+         </div>
       </div>
    )
 }
 
 export default App
-
-// 3 Life Cycle Methods - useEffect hook
-
-// componentDidMount - initial mount / render
-
-// componentDidUpdate - whenever variable or state change component we re-render
-
-// componentWillUnmount - do something before the current component get unmount
